@@ -21,11 +21,13 @@ public class Main {
             Utils.DBG("Filename is "+ fileName +" reading file content");
             int[] numbersFromFile = Utils.readNumbersFromFile(fileName);
             if (numbersFromFile!= null) {
-                for (int i :numbersFromFile) {
-                    Utils.DBG("Number from file "+i);
-                }
+                Utils.DBG(numbersFromFile);
+                Sorter sorter = new Sorter();
+                //sorter.sortUsingBubble(numbersFromFile);
+                sorter.sortUsingInsertion(numbersFromFile);
+                Utils.DBG(numbersFromFile);
             }
-        }else {Utils.DBG("File name is empty... no name - no sort.");}
+        } else {Utils.DBG("File name is empty... no name - no sorting.");}
     }
 
     private static int getNumbersCnt(Scanner scanner){

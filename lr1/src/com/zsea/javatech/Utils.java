@@ -13,6 +13,13 @@ public class Utils {
         System.out.println(string);
     }
 
+    public static void DBG(int[] array){
+        for (int i :array) {
+            System.out.print(" "+i+" ");
+        }
+        System.out.println('\n');
+    }
+
     public static File createNewRandomNumbersFile(String fileName, int numbersCnt) {
         File file = new File(fileName);
 
@@ -46,7 +53,7 @@ public class Utils {
             bw.write(String.valueOf(numbersCnt));
             bw.newLine();
             for(int i = 0; i< numbersCnt;i++){
-                bw.write(String.valueOf(random.nextInt(10)-5));
+                bw.write(String.valueOf(random.nextInt(10)));
                 bw.newLine();
             }
             bw.close();

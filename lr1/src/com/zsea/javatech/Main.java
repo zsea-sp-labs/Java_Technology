@@ -7,12 +7,14 @@ import java.util.Scanner;
  */
 public class Main {
 
-    public static final String randomNumbersFileName = "FileWithRandomNumbers";
-
     public static void main(String[] args) {
-        Utils.DBG("Enter file name to sort");
-
         Scanner scanner = new Scanner(System.in);
+        Utils.DBG("Create new file with random numbers or you have one? (y/n)");
+        if(scanner.nextLine().equals("y")){
+            Utils.createNewRandomNumbersFile(getFileName(scanner), getNumbersCnt(scanner));
+        }
+
+        Utils.DBG("Enter file name to sort:");
         String fileName = scanner.nextLine();
 
         if(fileName != null && !fileName.isEmpty()){
@@ -23,6 +25,28 @@ public class Main {
                     Utils.DBG("Number from file "+i);
                 }
             }
+        }else {Utils.DBG("File name is empty... no name - no sort.");}
+    }
+
+    private static int getNumbersCnt(Scanner scanner){
+        Utils.DBG("Enter numbers count :");
+        final int numbersCnt;
+        try {
+            numbersCnt = Integer.valueOf(scanner.nextLine());
+        } catch (NumberFormatException e){
+            Utils.DBG("You should use numbers, try again.");
+            return getNumbersCnt(scanner);
         }
+        return numbersCnt;
+    }
+
+    private static String getFileName(Scanner scanner){
+        Utils.DBG("Enter file name:");
+        final String fileName = scanner.nextLine();
+        if(fileName == null || fileName.isEmpty()){
+            Utils.DBG("File name should not be empty");
+            return getFileName(scanner);
+        }
+        return fileName;
     }
 }

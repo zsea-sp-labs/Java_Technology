@@ -9,25 +9,28 @@ import java.util.Scanner;
  */
 public class Utils {
 
-    public final static void DBG(String string){
+    public static void DBG(String string){
         System.out.println(string);
     }
 
-    public static final  File createNewRandomNumbersFile(String fileName, int numbersCnt){
-        return createNewRandomNumbersFile(fileName,numbersCnt,false);
-    }
-
-    public static final  File createNewRandomNumbersFile(String fileName, int numbersCnt, boolean overwrite) {
-        Random random = new Random();
+    public static File createNewRandomNumbersFile(String fileName, int numbersCnt) {
         File file = new File(fileName);
 
-        if (file.exists() & !overwrite ){
-            Utils.DBG("File already exists!");
-            return file;
-        } else if (file.exists() & overwrite) {
-            Utils.DBG("Trying to write to existing file");
-        }
+        if (file.exists()){
+            Utils.DBG("File already exists! Rewrite ? (y/n)");
+            Scanner scanner = new Scanner(System.in);
+            String usersAnswer = scanner.nextLine();
 
+            if(!usersAnswer.equals("y") && !usersAnswer.equals("n")){
+                Utils.DBG("You should use 'y' or 'n' key for answer! ");
+                createNewRandomNumbersFile(fileName,numbersCnt);
+            } else if (usersAnswer.equals("n")) return file;
+        }
+        return writeFileWithRandomNumbers(file,numbersCnt);
+    }
+
+    private static File writeFileWithRandomNumbers(File file, int numbersCnt){
+        Random random = new Random();
         FileWriter fw = null;
         try {
             fw = new FileWriter(file.getAbsoluteFile());

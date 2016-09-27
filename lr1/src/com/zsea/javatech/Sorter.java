@@ -21,7 +21,7 @@ public class Sorter {
             }
         }
         double stopTimeMs = System.currentTimeMillis();
-        Utils.DBG("Sorting was finished in "+ (stopTimeMs - startTimeMs) + " milliseconds");
+        Utils.DBG("Bubble Sorting was finished in "+ (stopTimeMs - startTimeMs) + " milliseconds");
         Utils.DBG("Compare attempts => "+compareAttempts);
         Utils.DBG("Swaps => "+swaps);
         return arrayToSort;
@@ -46,11 +46,18 @@ public class Sorter {
         for(int i = 1; i < arrayToSort.length; i++){
             temp = arrayToSort[i];
             j = i - 1;
-            while (j > 0 && temp < arrayToSort[j]){
+
+            while (j >= 0 && temp < arrayToSort[j]){
+                compareAttempts++;
                 arrayToSort[j+1] = arrayToSort[j];
+                swaps++;
                 j = j-1;
+                if(j-1 >= 0 && !(temp < arrayToSort[j-1])){  // REMOVE TO GET CLEAR RESULTS OF TIME
+                    compareAttempts++;
+                }
             }
             arrayToSort[j+1] = temp;
+            swaps++;
         }
         double stopTimeMs = System.currentTimeMillis();
         Utils.DBG("Insertion Sorting was finished in "+ (stopTimeMs - startTimeMs) + " milliseconds");

@@ -26,10 +26,12 @@ public class Main {
                 //sorter.sortUsingBubble(numbersFromFile);
                 //sorter.sortUsingInsertion(numbersFromFile);
                 //sorter.sortUsingShaker(numbersFromFile);
-                sorter.sortUsingQuickSorter(numbersFromFile);
+                //sorter.sortUsingQuickSorter(numbersFromFile);
+                sorter.sortUsingShell(numbersFromFile);
                 Utils.DBG(numbersFromFile);
             }
         } else {Utils.DBG("File name is empty... no name - no sorting.");}
+        scanner.close();
     }
 
     private static int getNumbersCnt(Scanner scanner){

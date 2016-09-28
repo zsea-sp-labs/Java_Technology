@@ -97,7 +97,7 @@ public class Sorter {
         Utils.DBG("Swaps => "+swaps);
         return arrayToSort;
     }
-    
+
     public int[] sortUsingQuickSorter(int[] arrayToSort){
         double startTimeMs = System.currentTimeMillis();
         int leftBorder = 0;
@@ -123,10 +123,14 @@ public class Sorter {
         while (i <= j){
             while(arrayToSort[i] < compareElement){
                 i++;
+                quickSortCompareCnt++;
             }
+            quickSortCompareCnt++;
             while (arrayToSort[j] > compareElement){
                 j--;
+                quickSortCompareCnt++;
             }
+            quickSortCompareCnt++;
             if(i <= j){
                 temp = arrayToSort[j];
                 arrayToSort[j] = arrayToSort[i];
@@ -143,4 +147,33 @@ public class Sorter {
             }
         }
     }
+    public int[] sortUsingShell(int[] arrayToSort){
+        double startTimeMs = System.currentTimeMillis();
+        int compareAttempts = 0;
+        int swaps = 0;
+        int temp = 0;
+        int step = arrayToSort.length / 2;
+
+        while(step > 0) {
+            for(int i = 0; i < (arrayToSort.length - step); i++) {
+                int j = i;
+                while(j >= 0 && arrayToSort[j] > arrayToSort[j + step]){
+                    compareAttempts++;
+                    temp = arrayToSort[j];
+                    arrayToSort[j] = arrayToSort[j + step];
+                    arrayToSort[j + step] = temp;
+                    swaps++;
+                    j--;
+                }
+                if(j+1 >=0) compareAttempts++;
+            }
+            step = step / 2;
+        }
+        double stopTimeMs = System.currentTimeMillis();
+        Utils.DBG("Shell Sorting was finished in "+ (stopTimeMs - startTimeMs) + " milliseconds");
+        Utils.DBG("Compare attempts => "+compareAttempts);
+        Utils.DBG("Swaps => "+swaps);
+        return arrayToSort;
+    }
+
 }

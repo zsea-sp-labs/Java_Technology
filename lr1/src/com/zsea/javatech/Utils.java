@@ -27,11 +27,12 @@ public class Utils {
             Utils.DBG("File already exists! Rewrite ? (y/n)");
             Scanner scanner = new Scanner(System.in);
             String usersAnswer = scanner.nextLine();
-
             if(!usersAnswer.equals("y") && !usersAnswer.equals("n")){
                 Utils.DBG("You should use 'y' or 'n' key for answer! ");
                 createNewRandomNumbersFile(fileName,numbersCnt);
-            } else if (usersAnswer.equals("n")) return file;
+            } else if (usersAnswer.equals("n")) {
+                return file;
+            }
         }
         return writeFileWithRandomNumbers(file,numbersCnt);
     }
@@ -82,6 +83,7 @@ public class Utils {
         if(scanner.hasNextInt()) {
             numbersToSort = new int[scanner.nextInt()];
         } else {
+            scanner.close();
             Utils.DBG("Header value is incorrect or not exists");
             return null;
         }
@@ -90,6 +92,7 @@ public class Utils {
         while(scanner.hasNextInt()) {
             numbersToSort[i++] = scanner.nextInt();
         }
+        scanner.close();
         if (i != numbersToSort.length) {
             Utils.DBG("File contains not complete sequence of numbers, be careful with results !");
             return numbersToSort;

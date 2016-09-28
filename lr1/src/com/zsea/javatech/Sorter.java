@@ -9,13 +9,14 @@ public class Sorter {
         double startTimeMs = System.currentTimeMillis();
         int swaps = 0;
         int compareAttempts = 0;
+        int temp;
         for (int i = 0; i < arrayToSort.length; i++){
             for (int j = arrayToSort.length - 1; j > i; j--){
                 compareAttempts++;
                 if(arrayToSort[j] < arrayToSort[j-1]){
-                    int tmp = arrayToSort[j-1];
+                    temp = arrayToSort[j-1];
                     arrayToSort[j-1] = arrayToSort[j];
-                    arrayToSort[j] = tmp;
+                    arrayToSort[j] = temp;
                     swaps++;
                 }
             }
@@ -26,17 +27,7 @@ public class Sorter {
         Utils.DBG("Swaps => "+swaps);
         return arrayToSort;
     }
-    /*
-    *   DO (i: = 2, 3, … n)
-		    t: = ai, j: =i-1
-		    DO (j > 0 и t < aj)
-			    aj+1:= aj
-			    j: = j-1
-            OD
-		    aj+1:= t
-        OD
 
-        * */
     public int[] sortUsingInsertion(int[] arrayToSort){
         double startTimeMs = System.currentTimeMillis();
         int swaps = 0;
@@ -51,7 +42,7 @@ public class Sorter {
                 compareAttempts++;
                 arrayToSort[j+1] = arrayToSort[j];
                 swaps++;
-                j = j-1;
+                j--;
                 if(j-1 >= 0 && !(temp < arrayToSort[j-1])){  // REMOVE TO GET CLEAR RESULTS OF TIME
                     compareAttempts++;
                 }
@@ -62,7 +53,62 @@ public class Sorter {
         double stopTimeMs = System.currentTimeMillis();
         Utils.DBG("Insertion Sorting was finished in "+ (stopTimeMs - startTimeMs) + " milliseconds");
         Utils.DBG("Compare attempts => "+compareAttempts);
-        Utils.DBG("Swaps => "+swaps);
+        Utils.DBG("Swaps => "+swaps / 2); // because each array change operation (like in cycle) is not swap but move, only a half of swap
         return arrayToSort;
     }
+    /*
+    L: = 1, R: = n, k: = n,
+	DO
+		DO (j =R, R-1, ... L+1)
+			IF (aj < aj-1) aj ↔ aj-1, k: = j FI
+		OD
+		L: = k
+		DO (j: = L, L+1, ... R-1)
+			IF (aj > aj+1) aj ↔ aj+1, k: = j, FI
+		OD
+		R: = k
+	OD (L < R)
+
+    * */
+    public int[] sortUsingShaker(int[] arrayToSort){
+        double startTimeMs = System.currentTimeMillis();
+        int swaps = 0;
+        int compareAttempts = 0;
+        int temp ;
+        int leftBorder = 0;
+        int rightBorder = arrayToSort.length - 1;
+        int swapIndex = arrayToSort.length - 1;
+
+        do {
+            for (int j = rightBorder; j > leftBorder; j--) {
+                compareAttempts++;
+                if (arrayToSort[j] < arrayToSort[j-1]){
+                    temp = arrayToSort[j-1];
+                    arrayToSort[j-1] = arrayToSort[j];
+                    arrayToSort[j] = temp;
+                    swapIndex = j;
+                    swaps++;
+                }
+            }
+            leftBorder = swapIndex;
+            for(int j = leftBorder; j < rightBorder; j++) {
+                compareAttempts++;
+                if(arrayToSort[j] > arrayToSort[j+1]){
+                    temp = arrayToSort[j+1];
+                    arrayToSort[j+1] = arrayToSort[j];
+                    arrayToSort[j] = temp;
+                    swapIndex = j;
+                    swaps++;
+                }
+            }
+            rightBorder = swapIndex;
+        } while (leftBorder < rightBorder);
+
+        double stopTimeMs = System.currentTimeMillis();
+        Utils.DBG("Shaker Sorting was finished in "+ (stopTimeMs - startTimeMs) + " milliseconds");
+        Utils.DBG("Compare attempts => "+compareAttempts);
+        Utils.DBG("Swaps => "+swaps / 2); // because each array change operation (like in cycle) is not swap but move, only a half of swap
+        return arrayToSort;
+    }
+
 }

@@ -97,31 +97,13 @@ public class Sorter {
         Utils.DBG("Swaps => "+swaps);
         return arrayToSort;
     }
-    /*
-    *
-    * х:=аL, i:=L, j:=R,
-        DО (i≤j)
-            DО (ai<x) i:=i+1 OD
-            DО (aj>x) j:=j-1 OD
-                IF (i<=j)
-                    ai↔ aj,, i:=i+1, j:=j-1
-                FI
-        OD
-        IF (L<j)
-            <Сортування частини масиву з границями (L,j)>
-        FI
-        IF (i<R)
-            < Сортування частини масиву з границями (i,R)>
-        FI
-*/
+    
     public int[] sortUsingQuickSorter(int[] arrayToSort){
         double startTimeMs = System.currentTimeMillis();
-
         int leftBorder = 0;
         int rightBorder = arrayToSort.length - 1;
-        int compareElement = arrayToSort[arrayToSort.length/2];
 
-        quickSort(arrayToSort,leftBorder,rightBorder,compareElement);
+        quickSort(arrayToSort,leftBorder,rightBorder);
 
         double stopTimeMs = System.currentTimeMillis();
         Utils.DBG("Quick Sorting was finished in "+ (stopTimeMs - startTimeMs) + " milliseconds");
@@ -132,10 +114,12 @@ public class Sorter {
 
     private static int quickSortSwapCnt = 0;
     private static int quickSortCompareCnt = 0;
-    private void quickSort(int[] arrayToSort, int left, int right,int compareElement){
+    private void quickSort(int[] arrayToSort, int left, int right){
         int temp;
         int i = left;
         int j = right;
+        int compareElement = arrayToSort[left + (right - left) / 2];
+
         while (i <= j){
             while(arrayToSort[i] < compareElement){
                 i++;
@@ -144,18 +128,18 @@ public class Sorter {
                 j--;
             }
             if(i <= j){
-                temp = arrayToSort[right];
-                arrayToSort[right] = arrayToSort[left];
-                arrayToSort[left] = temp;
+                temp = arrayToSort[j];
+                arrayToSort[j] = arrayToSort[i];
+                arrayToSort[i] = temp;
                 quickSortSwapCnt++;
                 i++;
                 j--;
             }
             if(left < j){
-                quickSort(arrayToSort,left,j,compareElement);
+                quickSort(arrayToSort,left,j);
             }
             if(i < right){
-                quickSort(arrayToSort,i,right,compareElement);
+                quickSort(arrayToSort,i,right);
             }
         }
     }

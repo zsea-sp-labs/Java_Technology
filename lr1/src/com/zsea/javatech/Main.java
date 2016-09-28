@@ -25,7 +25,8 @@ public class Main {
                 Sorter sorter = new Sorter();
                 //sorter.sortUsingBubble(numbersFromFile);
                 //sorter.sortUsingInsertion(numbersFromFile);
-                sorter.sortUsingShaker(numbersFromFile);
+                //sorter.sortUsingShaker(numbersFromFile);
+                sorter.sortUsingQuickSorter(numbersFromFile);
                 Utils.DBG(numbersFromFile);
             }
         } else {Utils.DBG("File name is empty... no name - no sorting.");}

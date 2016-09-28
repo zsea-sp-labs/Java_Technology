@@ -56,20 +56,7 @@ public class Sorter {
         Utils.DBG("Swaps => "+swaps / 2); // because each array change operation (like in cycle) is not swap but move, only a half of swap
         return arrayToSort;
     }
-    /*
-    L: = 1, R: = n, k: = n,
-	DO
-		DO (j =R, R-1, ... L+1)
-			IF (aj < aj-1) aj ↔ aj-1, k: = j FI
-		OD
-		L: = k
-		DO (j: = L, L+1, ... R-1)
-			IF (aj > aj+1) aj ↔ aj+1, k: = j, FI
-		OD
-		R: = k
-	OD (L < R)
 
-    * */
     public int[] sortUsingShaker(int[] arrayToSort){
         double startTimeMs = System.currentTimeMillis();
         int swaps = 0;
@@ -107,8 +94,69 @@ public class Sorter {
         double stopTimeMs = System.currentTimeMillis();
         Utils.DBG("Shaker Sorting was finished in "+ (stopTimeMs - startTimeMs) + " milliseconds");
         Utils.DBG("Compare attempts => "+compareAttempts);
-        Utils.DBG("Swaps => "+swaps / 2); // because each array change operation (like in cycle) is not swap but move, only a half of swap
+        Utils.DBG("Swaps => "+swaps);
+        return arrayToSort;
+    }
+    /*
+    *
+    * х:=аL, i:=L, j:=R,
+        DО (i≤j)
+            DО (ai<x) i:=i+1 OD
+            DО (aj>x) j:=j-1 OD
+                IF (i<=j)
+                    ai↔ aj,, i:=i+1, j:=j-1
+                FI
+        OD
+        IF (L<j)
+            <Сортування частини масиву з границями (L,j)>
+        FI
+        IF (i<R)
+            < Сортування частини масиву з границями (i,R)>
+        FI
+*/
+    public int[] sortUsingQuickSorter(int[] arrayToSort){
+        double startTimeMs = System.currentTimeMillis();
+
+        int leftBorder = 0;
+        int rightBorder = arrayToSort.length - 1;
+        int compareElement = arrayToSort[arrayToSort.length/2];
+
+        quickSort(arrayToSort,leftBorder,rightBorder,compareElement);
+
+        double stopTimeMs = System.currentTimeMillis();
+        Utils.DBG("Quick Sorting was finished in "+ (stopTimeMs - startTimeMs) + " milliseconds");
+        Utils.DBG("Compare attempts => "+quickSortCompareCnt);
+        Utils.DBG("Swaps => "+quickSortSwapCnt);
         return arrayToSort;
     }
 
+    private static int quickSortSwapCnt = 0;
+    private static int quickSortCompareCnt = 0;
+    private void quickSort(int[] arrayToSort, int left, int right,int compareElement){
+        int temp;
+        int i = left;
+        int j = right;
+        while (i <= j){
+            while(arrayToSort[i] < compareElement){
+                i++;
+            }
+            while (arrayToSort[j] > compareElement){
+                j--;
+            }
+            if(i <= j){
+                temp = arrayToSort[right];
+                arrayToSort[right] = arrayToSort[left];
+                arrayToSort[left] = temp;
+                quickSortSwapCnt++;
+                i++;
+                j--;
+            }
+            if(left < j){
+                quickSort(arrayToSort,left,j,compareElement);
+            }
+            if(i < right){
+                quickSort(arrayToSort,i,right,compareElement);
+            }
+        }
+    }
 }

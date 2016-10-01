@@ -37,8 +37,7 @@ public class Utils {
         return writeFileWithRandomNumbers(file,numbersCnt);
     }
 
-    private static File writeFileWithRandomNumbers(File file, int numbersCnt){
-        Random random = new Random();
+    private static FileWriter initFileWriter(File file){
         FileWriter fw = null;
         try {
             fw = new FileWriter(file.getAbsoluteFile());
@@ -49,7 +48,14 @@ public class Utils {
             Utils.DBG("Problem occured during FileWriter creation, please see the stacktrace above.");
             return null;
         }
-        BufferedWriter bw = new BufferedWriter(fw);
+        return fw;
+    }
+
+    private static File writeFileWithRandomNumbers(File file, int numbersCnt){
+        Random random = new Random();
+        FileWriter fileWriter = initFileWriter(file);
+        if(fileWriter == null) return null;
+        BufferedWriter bw = new BufferedWriter(fileWriter);
         try {
             bw.write(String.valueOf(numbersCnt));
             bw.newLine();
@@ -68,6 +74,24 @@ public class Utils {
             }
         }
         return file;
+    }
+
+    public static void writeStringToTextFile(String fileName, String stringToWrite){
+        FileWriter fileWriter = initFileWriter(new File(fileName));
+        if(fileWriter == null) return;
+        BufferedWriter bw = new BufferedWriter(fileWriter);
+        try {
+            bw.write(stringToWrite);
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static int[] readNumbersFromFile(String fileName){

@@ -1,5 +1,6 @@
 package com.zsea.javatech;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -21,13 +22,27 @@ public class Main {
             Utils.DBG("Filename is "+ fileName +" reading file content");
             int[] numbersFromFile = Utils.readNumbersFromFile(fileName);
             if (numbersFromFile!= null) {
+                int[] bubbleArray = new int[numbersFromFile.length];
+                int[] insertionArray = new int[numbersFromFile.length];
+                int[] shakerArray = new int[numbersFromFile.length];
+                int[] quickSorterArray = new int[numbersFromFile.length];
+                System.arraycopy(numbersFromFile, 0,bubbleArray, 0,numbersFromFile.length);
+                System.arraycopy(numbersFromFile, 0,insertionArray, 0,numbersFromFile.length);
+                System.arraycopy(numbersFromFile, 0,shakerArray, 0,numbersFromFile.length);
+                System.arraycopy(numbersFromFile, 0,quickSorterArray, 0,numbersFromFile.length);
                 Utils.DBG(numbersFromFile);
                 Sorter sorter = new Sorter();
-                //sorter.sortUsingBubble(numbersFromFile);
-                //sorter.sortUsingInsertion(numbersFromFile);
-                //sorter.sortUsingShaker(numbersFromFile);
-                //sorter.sortUsingQuickSorter(numbersFromFile);
+                sorter.sortUsingBubble(bubbleArray);
+                sorter.sortUsingInsertion(insertionArray);
+                sorter.sortUsingShaker(shakerArray);
+                sorter.sortUsingQuickSorter(quickSorterArray);
                 sorter.sortUsingShell(numbersFromFile);
+
+                Utils.DBG("Enter file name to save results or empty string to avoid data save:");
+                String fileNameForResults = scanner.nextLine();
+                if(!fileNameForResults.isEmpty()){
+                    Utils.writeStringToTextFile(fileNameForResults, Arrays.toString(numbersFromFile));
+                }
                 Utils.DBG(numbersFromFile);
             }
         } else {Utils.DBG("File name is empty... no name - no sorting.");}

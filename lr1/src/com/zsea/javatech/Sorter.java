@@ -21,10 +21,7 @@ public class Sorter {
                 }
             }
         }
-        double stopTimeMs = System.currentTimeMillis();
-        Utils.DBG("Bubble Sorting was finished in "+ (stopTimeMs - startTimeMs) + " milliseconds");
-        Utils.DBG("Compare attempts => "+compareAttempts);
-        Utils.DBG("Swaps => "+swaps);
+        printResults(arrayToSort,startTimeMs,System.currentTimeMillis(),compareAttempts,swaps);
         return arrayToSort;
     }
 
@@ -50,10 +47,7 @@ public class Sorter {
             arrayToSort[j+1] = temp;
             swaps++;
         }
-        double stopTimeMs = System.currentTimeMillis();
-        Utils.DBG("Insertion Sorting was finished in "+ (stopTimeMs - startTimeMs) + " milliseconds");
-        Utils.DBG("Compare attempts => "+compareAttempts);
-        Utils.DBG("Swaps => "+swaps / 2); // because each array change operation (like in cycle) is not swap but move, only a half of swap
+        printResults(arrayToSort,startTimeMs,System.currentTimeMillis(),compareAttempts,swaps /2); // because each array change operation (like in cycle) is not swap but move, only a half of swap
         return arrayToSort;
     }
 
@@ -91,10 +85,7 @@ public class Sorter {
             rightBorder = swapIndex;
         } while (leftBorder < rightBorder);
 
-        double stopTimeMs = System.currentTimeMillis();
-        Utils.DBG("Shaker Sorting was finished in "+ (stopTimeMs - startTimeMs) + " milliseconds");
-        Utils.DBG("Compare attempts => "+compareAttempts);
-        Utils.DBG("Swaps => "+swaps);
+        printResults(arrayToSort,startTimeMs,System.currentTimeMillis(),compareAttempts,swaps);
         return arrayToSort;
     }
 
@@ -105,10 +96,7 @@ public class Sorter {
 
         quickSort(arrayToSort,leftBorder,rightBorder);
 
-        double stopTimeMs = System.currentTimeMillis();
-        Utils.DBG("Quick Sorting was finished in "+ (stopTimeMs - startTimeMs) + " milliseconds");
-        Utils.DBG("Compare attempts => "+quickSortCompareCnt);
-        Utils.DBG("Swaps => "+quickSortSwapCnt);
+        printResults(arrayToSort,startTimeMs,System.currentTimeMillis(),quickSortCompareCnt,quickSortSwapCnt);
         return arrayToSort;
     }
 
@@ -147,6 +135,7 @@ public class Sorter {
             }
         }
     }
+
     public int[] sortUsingShell(int[] arrayToSort){
         double startTimeMs = System.currentTimeMillis();
         int compareAttempts = 0;
@@ -169,11 +158,15 @@ public class Sorter {
             }
             step = step / 2;
         }
-        double stopTimeMs = System.currentTimeMillis();
-        Utils.DBG("Shell Sorting was finished in "+ (stopTimeMs - startTimeMs) + " milliseconds");
-        Utils.DBG("Compare attempts => "+compareAttempts);
-        Utils.DBG("Swaps => "+swaps);
+        printResults(arrayToSort,startTimeMs,System.currentTimeMillis(),compareAttempts,swaps);
         return arrayToSort;
     }
 
+    private void printResults(int[] arrayToSort,double startTimeMs,double stopTimeMs, int compareAttempts, int swaps){
+        Utils.DBG("Results : ");
+        Utils.DBG(arrayToSort);
+        Utils.DBG("Shell Sorting was finished in "+ (stopTimeMs - startTimeMs) + " milliseconds");
+        Utils.DBG("Compare attempts => "+compareAttempts);
+        Utils.DBG("Swaps => "+swaps);
+    }
 }

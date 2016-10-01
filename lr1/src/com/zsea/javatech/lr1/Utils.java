@@ -1,4 +1,4 @@
-package com.zsea.javatech;
+package com.zsea.javatech.lr1;
 
 import java.io.*;
 import java.util.Random;

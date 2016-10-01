@@ -1,4 +1,4 @@
-package com.zsea.javatech;
+package com.zsea.javatech.lr1;
 
 /**
  * Created by truerall on 5/27/16.

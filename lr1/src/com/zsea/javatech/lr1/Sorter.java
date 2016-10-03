@@ -6,7 +6,7 @@ package com.zsea.javatech.lr1;
 public class Sorter {
 
     public int[] sortUsingBubble(int[] arrayToSort){
-        double startTimeMs = System.currentTimeMillis();
+        long startTimeMs = System.currentTimeMillis();
         int swaps = 0;
         int compareAttempts = 0;
         int temp;
@@ -26,7 +26,7 @@ public class Sorter {
     }
 
     public int[] sortUsingInsertion(int[] arrayToSort){
-        double startTimeMs = System.currentTimeMillis();
+        long startTimeMs = System.currentTimeMillis();
         int swaps = 0;
         int compareAttempts = 0;
         int temp;
@@ -52,7 +52,7 @@ public class Sorter {
     }
 
     public int[] sortUsingShaker(int[] arrayToSort){
-        double startTimeMs = System.currentTimeMillis();
+        long startTimeMs = System.currentTimeMillis();
         int swaps = 0;
         int compareAttempts = 0;
         int temp ;
@@ -90,7 +90,7 @@ public class Sorter {
     }
 
     public int[] sortUsingQuickSorter(int[] arrayToSort){
-        double startTimeMs = System.currentTimeMillis();
+        long startTimeMs = System.currentTimeMillis();
         int leftBorder = 0;
         int rightBorder = arrayToSort.length - 1;
 
@@ -137,7 +137,7 @@ public class Sorter {
     }
 
     public int[] sortUsingShell(int[] arrayToSort){
-        double startTimeMs = System.currentTimeMillis();
+        long startTimeMs = System.currentTimeMillis();
         int compareAttempts = 0;
         int swaps = 0;
         int temp = 0;
@@ -162,7 +162,7 @@ public class Sorter {
         return arrayToSort;
     }
 
-    private void printResults(int[] arrayToSort,double startTimeMs,double stopTimeMs, int compareAttempts, int swaps){
+    private void printResults(int[] arrayToSort,long startTimeMs,long stopTimeMs, int compareAttempts, int swaps){
         Utils.DBG("Results : ");
         Utils.DBG(arrayToSort);
         Utils.DBG("Shell Sorting was finished in "+ (stopTimeMs - startTimeMs) + " milliseconds");

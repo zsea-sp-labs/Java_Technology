@@ -10,8 +10,8 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Utils.DBG("Create new file with random numbers or you have one? (y/n)");
-        if(scanner.nextLine().equals("y")){
+        Utils.DBG("Create new file with random numbers? (y/n)");
+        if(!scanner.nextLine().equals("n")){
             Utils.createNewRandomNumbersFile(getFileName(scanner), getNumbersCnt(scanner));
         }
 
@@ -43,7 +43,6 @@ public class Main {
                 if(!fileNameForResults.isEmpty()){
                     Utils.writeStringToTextFile(fileNameForResults, Arrays.toString(numbersFromFile));
                 }
-                Utils.DBG(numbersFromFile);
             }
         } else {Utils.DBG("File name is empty... no name - no sorting.");}
         scanner.close();

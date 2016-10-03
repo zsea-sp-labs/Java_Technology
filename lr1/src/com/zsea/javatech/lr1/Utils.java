@@ -1,6 +1,9 @@
 package com.zsea.javatech.lr1;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -122,5 +125,15 @@ public class Utils {
             return numbersToSort;
         }
         return numbersToSort;
+    }
+
+    public static String readFileAsString(String path){
+        byte[] encoded = new byte[0];
+        try {
+            encoded = Files.readAllBytes(Paths.get(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new String(encoded, Charset.defaultCharset());
     }
 }

@@ -9,13 +9,35 @@ public class Finder {
     public void findUsingKMPSerch(String toSearchIn, String toSearch){
 
     }
-    public void findUsingSimpleSearch(String toSearchIn, String toSearch){
 
+    public void findUsingSimpleSearch(String toSearchIn, String toSearch){
+        Utils.DBG("SimpleSearch");
+        long startTime = System.currentTimeMillis();
+        int matchesCount = 0;
+        for(int i = 0; i < toSearchIn.length();i++){
+            for(int j = 0; j< toSearch.length(); j++){
+                if(toSearchIn.charAt(i+j) != toSearch.charAt(j)){
+                    break;
+                } else if ( j == toSearch.length() - 1){
+                    Utils.DBG("match found at i = "+i);
+                    matchesCount++;
+                }
+            }
+        }
+        printResults(startTime, System.currentTimeMillis(), matchesCount);
     }
+
     public void findUsingDefaultSearch(String toSearchIn, String toSearch){
+        Utils.DBG("DefaultSearch");
+        int matchesCount = 0;
         long startMilliseconds = System.currentTimeMillis();
-        String[] detectionArray = toSearchIn.split(toSearch);
-        printResults(startMilliseconds,System.currentTimeMillis(),detectionArray.length);
+        int index = toSearchIn.indexOf(toSearch);
+        while(index >= 0) {
+            Utils.DBG("Match found at index = "+index);
+            matchesCount++;
+            index = toSearchIn.indexOf(toSearch, index+1);
+        }
+        printResults(startMilliseconds,System.currentTimeMillis(),matchesCount);
     }
 
     private void printResults(long startMilliseconds,long stopMilliseconds,int matchesCount){

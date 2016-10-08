@@ -6,8 +6,59 @@ import com.zsea.javatech.lr1.Utils;
  * Created by truerall on 10/2/16.
  */
 public class Finder {
-    public void findUsingKMPSerch(String toSearchIn, String toSearch){
-
+    public void findUsingKMPSearchTrivialIncreasingPrefixLength(String str){
+        int[] prefixFunction = new int[str.length()];// для i = 0 нет смысла считать префикс функцию - массив из 1 го элемента значит префикс = суффикс = длинна строки
+        for(int i = str.length()-1; i >= 1; i--){ // pref function index which is also border length of prefix (pref.length < i)
+            Utils.DBG("i = "+i);
+            int j;
+            for (j = i-1; j >= 0 ; j--){ // j изменяет длинну префикса начиная с самого крупного (i-1) и опускаясь до 1 (2 символов)
+                boolean prefixMatches = true;
+                Utils.DBG("j = "+j);
+                for(int k = 0; k<=j; k++){ // k является индексом позволяющим проходить весь массив для сравнения
+                    Utils.DBG(" str["+k+"] = "+ str.charAt(k) );
+                    Utils.DBG(" compareTo str["+(i-j+k)+"]= "+str.charAt((i-j+k)));
+                    if(str.charAt(k) != str.charAt(i - j + k )){
+                        prefixMatches = false;
+                        break;
+                    }
+                }
+                Utils.DBG("I ve reached this line with J = " +j);
+                if(prefixMatches) {
+                    Utils.DBG("setting prefix func value to "+j);
+                    prefixFunction[i] = j +1; // because of that array indexing starts from 0, which means 1;
+                    break;
+                }
+            }
+        }
+        Utils.DBG("Prefix function array ");
+        Utils.DBG(prefixFunction);
+    }
+    public void findUsingKMPSearchTrivialDecreasingPrefixLength(String str){
+        int[] prefixFunction = new int[str.length()];// для i = 0 нет смысла считать префикс функцию - массив из 1 го элемента значит префикс = суффикс = длинна строки
+        for(int i = str.length()-1; i >= 1; i--){ // pref function index which is also border length of prefix (pref.length < i)
+            Utils.DBG("i = "+i);
+            int j;
+            for (j = i-1; j >= 0 ; j--){ // j изменяет длинну префикса начиная с самого крупного (i-1) и опускаясь до 1 (2 символов)
+                boolean prefixMatches = true;
+                Utils.DBG("j = "+j);
+                for(int k = 0; k<=j; k++){ // k является индексом позволяющим проходить весь массив для сравнения
+                    Utils.DBG(" str["+k+"] = "+ str.charAt(k) );
+                    Utils.DBG(" compareTo str["+(i-j+k)+"]= "+str.charAt((i-j+k)));
+                    if(str.charAt(k) != str.charAt(i - j + k )){
+                        prefixMatches = false;
+                        break;
+                    }
+                }
+                Utils.DBG("I ve reached this line with J = " +j);
+                if(prefixMatches) {
+                    Utils.DBG("setting prefix func value to "+j);
+                    prefixFunction[i] = j +1; // because of that array indexing starts from 0, which means 1;
+                    break;
+                }
+            }
+        }
+        Utils.DBG("Prefix function array ");
+        Utils.DBG(prefixFunction);
     }
 
     public void findUsingSimpleSearch(String toSearchIn, String toSearch){

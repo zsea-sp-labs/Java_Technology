@@ -6,18 +6,18 @@ import com.zsea.javatech.lr1.Utils;
  * Created by truerall on 10/2/16.
  */
 public class Finder {
-    public void findUsingKMPSearchS2IncreasingPrefixLength(String str){
-        int[] prefixFunction = new int[str.length()];// для i = 0 нет смысла считать префикс функцию - массив из 1 го элемента значит префикс = суффикс = длинна строки
-        for(int i = 1; i < str.length(); i++){ // pref function index which is also border length of prefix (pref.length < i)
+    public void findUsingKMPSearchS2DecreasingCalculatedPrefixLength(String str){
+        int[] prefixFunction = new int[str.length()];
+        for(int i = 1; i < str.length(); i++){ // ?
             Utils.DBG("i = "+i);
-            int j;
-            for (j = 0; j <= i-1 ; j++){ // j изменяет длинну префикса начиная с самого мелкого (0) и подымаецо до i-1 - максимально возможного
-                boolean prefixMatches = true;
+            int j = 0;// пользуясь 1м свойством префиксфункции pi[i+1] <= pi[i]+1 мы можем определить максимально возможную длину суффикса
+            for (j = prefixFunction[i-1]+1; j >= 0 ; j--){ // j изменяет длинну префикса начиная с макс возм длинны и опускаясь до 1 (2 символов)
                 Utils.DBG("j = "+j);
-                for(int k = 0; k<=j; k++){ // k является индексом позволяющим проходить весь массив для сравнения до длины сравниемого суфикса
-                    Utils.DBG(" str["+k+"] = "+ str.charAt(k) );
-                    Utils.DBG(" compareTo str["+(i-j+k)+"]= "+str.charAt((i-j+k)));
-                    if(str.charAt(k) != str.charAt(i - j + k )){
+                boolean prefixMatches = true;
+                for(int k = 0; k < j; k++){ // k является индексом позволяющим проходить весь массив для сравнения
+                    Utils.DBG(" str["+(k)+"] = "+ str.charAt(k) );
+                    Utils.DBG(" compareTo str["+(i-j+k)+"]= "+str.charAt((i-j+k+1)));
+                    if(str.charAt(k) != str.charAt(i - j + k +1)){
                         prefixMatches = false;
                         break;
                     }
@@ -25,11 +25,12 @@ public class Finder {
                 Utils.DBG("I ve reached this line with J = " +j);
                 if(prefixMatches) {
                     Utils.DBG("setting prefix func value to "+j);
-                    prefixFunction[i] = j +1; // because of that array indexing starts from 0, which means 1;
+                    prefixFunction[i] = j; // because of that array indexing starts from 0, which means 1;
+                    break;
                 }
             }
         }
-        Utils.DBG("Prefix function array ");
+        Utils.DBG("S^2 Prefix function array ");
         Utils.DBG(prefixFunction);
     }
     public void findUsingKMPSearchTrivialIncreasingPrefixLength(String str){

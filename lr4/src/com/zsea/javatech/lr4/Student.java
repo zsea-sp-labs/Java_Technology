@@ -5,6 +5,7 @@ import java.util.Calendar;
 /**
  * Created by truerall on 10/10/16.
  */
+@PersonalInfo(author = "Truerall", date = "03/04/2005", currentRevision = 2, lastModified = "04/05/2006", lastModifiedBy = "Sapunov Dmitry", reviewers = { "Person_1", "Person_2","Person_3" })
 public class Student extends Person implements Comparable<Student>{
     private String group;
     private int course;

@@ -3,6 +3,7 @@ package com.zsea.javatech.lr4;
 import com.zsea.javatech.lr1.Utils;
 import com.zsea.javatech.lr4.test.CollectionTester;
 
+import java.lang.annotation.Annotation;
 import java.util.*;
 
 /**
@@ -17,8 +18,14 @@ public class Main {
         LinkedHashSet<Person> linkedHashSet = new LinkedHashSet<>();
         TreeSet<Person> treeSet = new TreeSet<>();
 
+        Student student = new Student();
+        Class c = student.getClass();
+        for(Annotation annotation : c.getDeclaredAnnotations()){
+            Utils.DBG("Annotation "+ annotation.toString());
+        }
+
         CollectionTester collectionTester = new CollectionTester(arrayList);
-        
+
         Utils.DBG(arrayList.getClass().getSimpleName());
         Utils.DBG(n + " elements were added for " + collectionTester.addTest(n) + " ms");
         Utils.DBG("All elements were accessed for " + collectionTester.accessTest() + " ns");

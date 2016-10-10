@@ -24,7 +24,7 @@ public class Main {
         String fileName;
         Finder finder = new Finder();
 
-        Utils.DBG("Read text from file() or from console (default : console)? (f/c):");
+        Utils.DBG("Read text from file() or from console, default - console? (f/c):");
         String answer = scanner.nextLine();
         if(!answer.equals("f")){
             Utils.DBG("Please enter text to search in:");
@@ -45,7 +45,6 @@ public class Main {
             finder.findUsingSimpleSearch(stringToSearchIn, stringToSearch);
             finder.findUsingKMPSearchS1DecreasingCalculatedPrefixLength(stringToSearchIn,stringToSearch);
         }
-
         scanner.close();
     }
 }

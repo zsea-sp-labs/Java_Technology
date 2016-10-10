@@ -6,80 +6,38 @@ import com.zsea.javatech.lr1.Utils;
  * Created by truerall on 10/2/16.
  */
 public class Finder {
-    public void findUsingKMPSearchS2DecreasingCalculatedPrefixLength(String str){
-        int[] prefixFunction = new int[str.length()];
-        for(int i = 1; i < str.length(); i++){ // ?
-            Utils.DBG("i = "+i);
-            int j = 0;// пользуясь 1м свойством префиксфункции pi[i+1] <= pi[i]+1 мы можем определить максимально возможную длину суффикса
-            for (j = prefixFunction[i-1]+1; j >= 0 ; j--){ // j изменяет длинну префикса начиная с макс возм длинны и опускаясь до 1 (2 символов)
-                Utils.DBG("j = "+j);
-                boolean prefixMatches = true;
-                for(int k = 0; k < j; k++){ // k является индексом позволяющим проходить весь массив для сравнения
-                    Utils.DBG(" str["+(k)+"] = "+ str.charAt(k) );
-                    Utils.DBG(" compareTo str["+(i-j+k)+"]= "+str.charAt((i-j+k+1)));
-                    if(str.charAt(k) != str.charAt(i - j + k +1)){
-                        prefixMatches = false;
-                        break;
-                    }
-                }
-                Utils.DBG("I ve reached this line with J = " +j);
-                if(prefixMatches) {
-                    Utils.DBG("setting prefix func value to "+j);
-                    prefixFunction[i] = j; // because of that array indexing starts from 0, which means 1;
-                    break;
-                }
+    public void findUsingKMPSearchS1DecreasingCalculatedPrefixLength(String stringToSearchIn, String stringToSearch){
+        Utils.DBG("KMPSearch");
+        int matchesCnt = 0;
+        long startTime = System.currentTimeMillis();
+        int[] prefixFunction = new int[stringToSearch.length()];
+        for(int i = 1; i < stringToSearch.length(); i++){ // ?
+            int j = prefixFunction[i-1];
+            while(j > 0 && stringToSearch.charAt(j)!=stringToSearch.charAt(i)){
+                j = prefixFunction[j-1];
+            }
+            if(stringToSearch.charAt(j) == stringToSearch.charAt(i)) prefixFunction[i] = j+1;
+        }
+        Utils.DBG("S^1 Prefix function array ");
+        Utils.DBG(prefixFunction);
+        // здесь мы можем понять весь смысл префикс функции. изначально наши образци начинают сравниватся по элементно аки в тривиальном
+        // но именно полученная префикс функция образца помогает нам понять на какую позицию мы можем максимально сместить курсор сравнения
+        // в случае обнаружения совпадения / расхождения элементов
+        int j = 0;
+        for (int i = 0; i < stringToSearchIn.length();i++){
+            while(j > 0 && stringToSearch.charAt(j)!=stringToSearchIn.charAt(i)){
+                j = prefixFunction[j-1];
+            }
+            if(stringToSearch.charAt(j) == stringToSearchIn.charAt(i)) {
+                j++;
+            }
+            if(j == stringToSearch.length()){
+                Utils.DBG("match found at i = "+ (i - j + 1));
+                j = prefixFunction[j-1]; // данное смещение решает проблему образца "aba" в строке "abababa" собственно именно потому нам и нужна префикс функция
+                matchesCnt++;
             }
         }
-        Utils.DBG("S^2 Prefix function array ");
-        Utils.DBG(prefixFunction);
-    }
-    public void findUsingKMPSearchTrivialIncreasingPrefixLength(String str){
-        int[] prefixFunction = new int[str.length()];// для i = 0 нет смысла считать префикс функцию - массив из 1 го элемента значит префикс = суффикс = длинна строки
-        for(int i = 1; i < str.length(); i++){ // pref function index which is also border length of prefix (pref.length < i)
-            Utils.DBG("i = "+i);
-            int j;
-            for (j = 0; j <= i-1 ; j++){ // j изменяет длинну префикса начиная с самого мелкого (0) и подымаецо до i-1 - максимально возможного
-                boolean prefixMatches = true;
-                Utils.DBG("j = "+j);
-                for(int k = 0; k<=j; k++){ // k является индексом позволяющим проходить весь массив для сравнения до длины сравниемого суфикса
-                    Utils.DBG(" str["+k+"] = "+ str.charAt(k) );
-                    Utils.DBG(" compareTo str["+(i-j+k)+"]= "+str.charAt((i-j+k)));
-                    if(str.charAt(k) != str.charAt(i - j + k )){
-                        prefixMatches = false;
-                        break;
-                    }
-                }
-                Utils.DBG("I ve reached this line with J = " +j);
-                if(prefixMatches) {
-                    Utils.DBG("setting prefix func value to "+j);
-                    prefixFunction[i] = j +1; // because of that array indexing starts from 0, which means 1;
-                }
-            }
-        }
-        Utils.DBG("Prefix function array ");
-        Utils.DBG(prefixFunction);
-    }
-
-    public void findUsingKMPSearchTrivialDecreasingPrefixLength(String str){
-        int[] prefixFunction = new int[str.length()];// для i = 0 нет смысла считать префикс функцию - массив из 1 го элемента значит префикс = суффикс = длинна строки
-        for(int i = str.length()-1; i >= 1; i--){ // pref function index which is also border length of prefix (pref.length < i)
-            int j;
-            for (j = i-1; j >= 0 ; j--){ // j изменяет длинну префикса начиная с самого крупного (i-1) и опускаясь до 1 (2 символов)
-                boolean prefixMatches = true;
-                for(int k = 0; k<=j; k++){ // k является индексом позволяющим проходить весь массив для сравнения
-                    if(str.charAt(k) != str.charAt(i - j + k )){
-                        prefixMatches = false;
-                        break;
-                    }
-                }
-                if(prefixMatches) {
-                    prefixFunction[i] = j +1; // because of that array indexing starts from 0, which means 1;
-                    break;
-                }
-            }
-        }
-        Utils.DBG("Prefix function array ");
-        Utils.DBG(prefixFunction);
+        printResults(startTime,System.currentTimeMillis(),matchesCnt);
     }
 
     public void findUsingSimpleSearch(String toSearchIn, String toSearch){
@@ -118,6 +76,7 @@ public class Finder {
         } else {
             Utils.DBG("Matches cnt = " + matchesCount);
             Utils.DBG("Search time = " + (stopMilliseconds - startMilliseconds));
+            Utils.DBG("---------");
         }
     }
 }

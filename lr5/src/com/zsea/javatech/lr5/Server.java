@@ -1,7 +1,7 @@
 package com.zsea.javatech.lr5;
+
 import com.zsea.javatech.lr1.Utils;
 
-import javax.rmi.CORBA.Util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,9 +10,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.*;
 
 public class Server {
     public static final int PORT_NUMBER = 8283;
@@ -81,7 +79,6 @@ public class Server {
             String messageFromClient = null;
             while (true) {
                 try {
-                    Utils.DBG("Attemp to readline");
                     messageFromClient = in.readLine();
                     if(!messageFromClient.isEmpty()) {
                         Utils.DBG("Message from Client " + messageFromClient);
@@ -102,8 +99,8 @@ public class Server {
 
         public void close() {
             try {
-                in.close();
-                out.close();
+                socket.shutdownInput();
+                socket.shutdownOutput();
                 socket.close();
             } catch (Exception e) {
                 e.printStackTrace();

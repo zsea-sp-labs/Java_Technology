@@ -51,10 +51,11 @@ public class ChatInterface extends JFrame {
                     out = new PrintWriter(socket.getOutputStream(), true);
                     out.println(nickname);
                     Utils.DBG("Socket isConnected "+ socket.isConnected());
+                    connectButton.setEnabled(false);
+                    yourNicknameTextField.setEnabled(false);
+                    serverIPTextField.setEnabled(false);
                     Reader reader = new Reader();
                     reader.start();
-                    //reader.setStop();
-
                 } catch (Exception e) {
                     e.printStackTrace();
                     close();
@@ -65,25 +66,6 @@ public class ChatInterface extends JFrame {
         sendMessageButton.addActionListener(new ActionListener() {
             @Override public void actionPerformed(ActionEvent e) {
                 out.println(yourMessageTextArea.getText());
-            }
-        });
-
-        chatTextArea.addComponentListener(new ComponentAdapter() {
-
-            @Override
-            public void componentResized(ComponentEvent e) {
-                super.componentResized(e);
-                chatTextArea.setLineWrap(true);
-                chatTextArea.setWrapStyleWord(true);
-            }
-        });
-
-        yourMessageTextArea.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                super.componentResized(e);
-                yourMessageTextArea.setLineWrap(true);
-                yourMessageTextArea.setWrapStyleWord(true);
             }
         });
         setVisible(true);
@@ -101,17 +83,17 @@ public class ChatInterface extends JFrame {
 
     private class Reader extends Thread {
 
-        private boolean stoped;
+        private boolean stopped;
         public void stopReader() {
-            stoped = true;
+            stopped = true;
         }
 
         @Override
         public void run() {
             try {
-                while (!stoped) {
+                while (!stopped) {
                     String strOut = in.readLine();
-                    chatTextArea.setText(chatTextArea.getText() +"/n"+strOut);
+                    chatTextArea.setText(chatTextArea.getText() +"\n"+strOut);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

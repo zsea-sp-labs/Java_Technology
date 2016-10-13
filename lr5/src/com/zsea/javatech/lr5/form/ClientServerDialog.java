@@ -1,12 +1,12 @@
 package com.zsea.javatech.lr5.form;
 
+import com.zsea.javatech.lr1.Utils;
 import com.zsea.javatech.lr5.Client;
 import com.zsea.javatech.lr5.Server;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 
 public class ClientServerDialog extends JFrame {
 
@@ -37,7 +37,9 @@ public class ClientServerDialog extends JFrame {
                     server = new Server();
                     serverButton.setText("Stop server");
                 } else {
+                    Utils.DBG("Trying to stop server");
                     server.stopServer();
+                    jFrame.dispose();
                 }
             }
         });

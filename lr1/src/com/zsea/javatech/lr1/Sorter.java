@@ -108,18 +108,18 @@ public class Sorter {
         int j = right;
         int compareElement = arrayToSort[left + (right - left) / 2];
 
-        while (i <= j){
-            while(arrayToSort[i] < compareElement){
+        while (i <= j) {
+            while (arrayToSort[i] < compareElement) {
                 i++;
                 quickSortCompareCnt++;
             }
             quickSortCompareCnt++;
-            while (arrayToSort[j] > compareElement){
+            while (arrayToSort[j] > compareElement) {
                 j--;
                 quickSortCompareCnt++;
             }
             quickSortCompareCnt++;
-            if(i <= j){
+            if (i <= j) {
                 temp = arrayToSort[j];
                 arrayToSort[j] = arrayToSort[i];
                 arrayToSort[i] = temp;
@@ -127,12 +127,12 @@ public class Sorter {
                 i++;
                 j--;
             }
-            if(left < j){
-                quickSort(arrayToSort,left,j);
-            }
-            if(i < right){
-                quickSort(arrayToSort,i,right);
-            }
+        }
+        if(left < j){
+            quickSort(arrayToSort,left,j);
+        }
+        if(i < right){
+            quickSort(arrayToSort,i,right);
         }
     }
 

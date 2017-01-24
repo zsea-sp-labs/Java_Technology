@@ -4,11 +4,27 @@ package com.zsea.javatech.lr1;
  * Created by truerall on 5/27/16.
  */
 public class Sorter {
+    private enum SortType {
+        BUBBLE("Bubble"),
+        INSERTION("Insertion"),
+        SHAKER("Shaker"),
+        QUICK("Quick"),
+        SHELL("Shell");
+
+        public String getName() {
+            return name;
+        }
+
+        private String name;
+        SortType(String name){
+            this.name = name;
+        }
+    }
 
     public int[] sortUsingBubble(int[] arrayToSort){
         long startTimeMs = System.currentTimeMillis();
-        int swaps = 0;
-        int compareAttempts = 0;
+        long swaps = 0;
+        long compareAttempts = 0;
         int temp;
         for (int i = 0; i < arrayToSort.length; i++){
             for (int j = arrayToSort.length - 1; j > i; j--){
@@ -21,14 +37,14 @@ public class Sorter {
                 }
             }
         }
-        printResults(arrayToSort,startTimeMs,System.currentTimeMillis(),compareAttempts,swaps);
+        printResults(SortType.BUBBLE,arrayToSort,startTimeMs,System.currentTimeMillis(),compareAttempts,swaps);
         return arrayToSort;
     }
 
     public int[] sortUsingInsertion(int[] arrayToSort){
         long startTimeMs = System.currentTimeMillis();
-        int swaps = 0;
-        int compareAttempts = 0;
+        long swaps = 0;
+        long compareAttempts = 0;
         int temp;
         int j;
         for(int i = 1; i < arrayToSort.length; i++){
@@ -47,14 +63,14 @@ public class Sorter {
             arrayToSort[j+1] = temp;
             swaps++;
         }
-        printResults(arrayToSort,startTimeMs,System.currentTimeMillis(),compareAttempts,swaps /2); // because each array change operation (like in cycle) is not swap but move, only a half of swap
+        printResults(SortType.INSERTION,arrayToSort,startTimeMs,System.currentTimeMillis(),compareAttempts,swaps /2); // because each array change operation (like in cycle) is not swap but move, only a half of swap
         return arrayToSort;
     }
 
     public int[] sortUsingShaker(int[] arrayToSort){
         long startTimeMs = System.currentTimeMillis();
-        int swaps = 0;
-        int compareAttempts = 0;
+        long swaps = 0;
+        long compareAttempts = 0;
         int temp ;
         int leftBorder = 0;
         int rightBorder = arrayToSort.length - 1;
@@ -85,7 +101,7 @@ public class Sorter {
             rightBorder = swapIndex;
         } while (leftBorder < rightBorder);
 
-        printResults(arrayToSort,startTimeMs,System.currentTimeMillis(),compareAttempts,swaps);
+        printResults(SortType.SHAKER,arrayToSort,startTimeMs,System.currentTimeMillis(),compareAttempts,swaps);
         return arrayToSort;
     }
 
@@ -96,16 +112,17 @@ public class Sorter {
 
         quickSort(arrayToSort,leftBorder,rightBorder);
 
-        printResults(arrayToSort,startTimeMs,System.currentTimeMillis(),quickSortCompareCnt,quickSortSwapCnt);
+        printResults(SortType.QUICK,arrayToSort,startTimeMs,System.currentTimeMillis(),quickSortCompareCnt,quickSortSwapCnt);
         return arrayToSort;
     }
 
-    private static int quickSortSwapCnt = 0;
-    private static int quickSortCompareCnt = 0;
+    private static long quickSortSwapCnt = 0;
+    private static long quickSortCompareCnt = 0;
     private void quickSort(int[] arrayToSort, int left, int right){
         int temp;
         int i = left;
         int j = right;
+        if (arrayToSort.length == 0) return;
         int compareElement = arrayToSort[left + (right - left) / 2];
 
         while (i <= j) {
@@ -138,8 +155,8 @@ public class Sorter {
 
     public int[] sortUsingShell(int[] arrayToSort){
         long startTimeMs = System.currentTimeMillis();
-        int compareAttempts = 0;
-        int swaps = 0;
+        long compareAttempts = 0;
+        long swaps = 0;
         int temp = 0;
         int step = arrayToSort.length / 2;
 
@@ -158,14 +175,15 @@ public class Sorter {
             }
             step = step / 2;
         }
-        printResults(arrayToSort,startTimeMs,System.currentTimeMillis(),compareAttempts,swaps);
+        printResults(SortType.SHELL,arrayToSort,startTimeMs,System.currentTimeMillis(),compareAttempts,swaps);
         return arrayToSort;
     }
 
-    private void printResults(int[] arrayToSort,long startTimeMs,long stopTimeMs, int compareAttempts, int swaps){
-        Utils.DBG("Results : ");
+    private void printResults(SortType type, int[] arrayToSort, long startTimeMs, long stopTimeMs, long compareAttempts, long swaps){
+        Utils.DBG("\n");
+        Utils.DBG(type.getName()+" Results : ");
         Utils.DBG(arrayToSort);
-        Utils.DBG("Shell Sorting was finished in "+ (stopTimeMs - startTimeMs) + " milliseconds");
+        Utils.DBG("Sorting was finished in "+ (stopTimeMs - startTimeMs) + " milliseconds");
         Utils.DBG("Compare attempts => "+compareAttempts);
         Utils.DBG("Swaps => "+swaps);
     }

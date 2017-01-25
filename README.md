@@ -12,7 +12,7 @@ it will not be a problem for you to understand how the code of laboratory task w
 Education system in Ukraine is quite stupid, so the main idea of this repo is to help you to avoid at least some problems from huge 
 list that was prepared for you by our government.
 
-Of course if you are trying to complete this course the code also will be helpful for you as an example.
+Of course if you are trying to complete this course, the code also will be helpful for you as an example.
 But trust no one! Im not sure are there any bugs) The only 100% fact that I can give for you, that these labs were alredy checked by the
 [lecturer of this discipline](https://www.linkedin.com/in/voldymyrk/).
 
@@ -29,9 +29,8 @@ may be in future I will fix this.
 implemented. But this word is not completely true. I think it is more like - copypasted. How stupid can be our education system?
 this task forces you just copy all methods of wraper-classes for data-types and use them at least once.
 ####LR4
-implemented. Object-oriented programming basics, nothing interesting. There is funny fact, I had only 1part of task (you can see this in
-tasks folder). Second part was created using the example that was given by one of students from my group.
-Second part task - is to test collections read / write time.
+implemented. Object-oriented programming basics, nothing interesting. There is funny fact, I had only 1 part of task (you can see this in tasks folder). Second part was created using the example that was given by one of students from my group.
+Second part of the task - is to test collections read / write time.
 ####LR5
 partly implemented. There is no "send file" option in chat. Also I should not be blame for this code - only a part of it is mine.
 Sorry guys.

@@ -31,6 +31,7 @@ this task forces you just copy all methods of wraper-classes for data-types and 
 ####LR4
 implemented. Object-oriented programming basics, nothing interesting. There is funny fact, I had only 1part of task (you can see this in
 tasks folder). Second part was created using the example that was given by one of students from my group.
+Second part task - is to test collections read / write time.
 ####LR5
 partly implemented. There is no "send file" option in chat. Also I should not be blame for this code - only a part of it is mine.
 Sorry guys.
